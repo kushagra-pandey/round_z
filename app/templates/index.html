@@ -1,0 +1,240 @@
+{% extends "base.html" %}
+
+{% block app_content %}
+    <style>
+	* {box-sizing:border-box}
+	.slideshow-container {
+  		max-width: 1000px;
+  		position: relative;
+  		margin: auto;
+	}
+	.mySlides {
+  		display: none;
+	}
+	.myTabs {
+		display: none;
+	}
+	.prev, .next {
+  		cursor: pointer;
+  		position: absolute;
+  		top: 50%;
+  		width: auto;
+  		margin-top: -22px;
+  		padding: 16px;
+  		color: black;
+  		font-weight: bold;
+  		font-size: 18px;
+  		transition: 0.6s ease;
+  		border-radius: 0 3px 3px 0;
+  		user-select: none;
+	}
+	.next {
+  		right: 0;
+  		border-radius: 3px 0 0 3px;
+	}
+	.prev:hover, .next:hover {
+  		background-color: rgba(0,0,0,0.8);
+		color: white;
+	}
+	
+	.prev2, .next2 {
+  		cursor: pointer;
+  		position: absolute;
+  		top: 50%;
+  		width: auto;
+  		margin-top: 375px;
+  		padding: 16px;
+  		color: black;
+  		font-weight: bold;
+  		font-size: 40px;
+  		transition: 0.6s ease;
+  		border-radius: 0 3px 3px 0;
+  		user-select: none;
+	}
+	.next2 {
+  		right: 0;
+  		border-radius: 3px 0 0 3px;
+	}
+	.prev2:hover, .next2:hover {
+  		background-color: rgba(0,0,0,0.8);
+		color: white;
+	}
+	.text {
+  		color: black;
+  		font-size: 15px;
+  		padding: 8px 12px;
+  		position: absolute;
+  		bottom: 8px;
+  		width: 100%;
+  		text-align: center;
+	}
+	.numbertext {
+  		color: #f2f2f2;
+  		font-size: 12px;
+  		padding: 8px 12px;
+  		position: absolute;
+  		top: 0;
+	}
+	.dot {
+  		cursor: pointer;
+  		height: 15px;
+  		width: 15px;
+  		margin: 0 2px;
+  		background-color: #bbb;
+  		border-radius: 33.33%;
+  		display: inline-block;
+  		transition: background-color 0.6s ease;
+	}
+	.active, .dot:hover {
+  		background-color: #717171;
+	}
+	.fade {
+  		-webkit-animation-name: fade;
+  		-webkit-animation-duration: 1.5s;
+  		animation-name: fade;
+  		animation-duration: 1.5s;
+	}
+	@-webkit-keyframes fade {
+  		from {opacity: .4} 
+  		to {opacity: 1}
+	}
+	@keyframes fade {
+  		from {opacity: .4} 
+  		to {opacity: 1}
+	}
+	.row {
+		
+		display: flex;
+		height: 400px;
+	}
+	.card {
+  		box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  		max-width: 300px;
+  		margin: auto;
+		margin-top: 22px;
+  		text-align: center;
+  		font-family: arial;
+		flex: 50%;
+  		padding: 5px;
+		display: none;
+	}
+
+	.price {
+  		color: grey;
+  		font-size: 22px;
+	}
+
+	.card button {
+  		border: none;
+  		outline: 0;
+  		padding: 12px;
+  		color: white;
+  		background-color: #000;
+  		text-align: center;
+  		cursor: pointer;
+  		width: 100%;
+  		font-size: 18px;
+		
+	}
+
+	.card button:hover {
+  		opacity: 0.7;
+	}
+    </style>
+    <script language="javascript">
+	var slideIndex = 1;
+	showSlides(slideIndex);
+
+// Next/previous controls
+	function plusSlides(n) {
+  		showSlides(slideIndex += n);
+	}
+
+// Thumbnail image controls
+	function currentSlide(n) {
+  		showSlides(slideIndex = n);
+	}
+
+	function showSlides(n) {
+  		var i;
+  		var slides = document.getElementsByClassName("mySlides");
+  		var dots = document.getElementsByClassName("dot");
+  		if (n > slides.length) {slideIndex = 1} 
+  		if (n < 1) {slideIndex = slides.length}
+  		for (i = 0; i < slides.length; i++) {
+      			slides[i].style.display = "none"; 
+  		}
+  		for (i = 0; i < dots.length; i++) {
+      			dots[i].className = dots[i].className.replace(" active", "");
+  		}
+  		slides[slideIndex-1].style.display = "block"; 
+  		dots[slideIndex-1].className += " active";
+	}
+
+	var tabIndex = 1;
+	showTabs(tabIndex);
+	function plusTabs(n) {
+		showTabs(tabIndex += n);
+	}
+	function currentTab(n) {
+		showTabs(tabIndex=n);
+	}
+	function showTabs(n) {
+		var i;
+		var tabs = document.getElementsByClassName("card");
+		if (n > tabs.length) {tabIndex = 1}
+		if (n < 1) {tabIndex = tabs.length}
+		for (i = 0; i < tabs.length; i++) {
+      			tabs[i].style.display = "none"; 
+  		}
+		var j;
+		for (j = tabIndex - 1; j < tabIndex + 2; j++) {
+			tabs[j % tabs.length].style.display = "block";
+		}
+		
+	}
+	window.onload = function() {
+  		currentSlide(1);
+		currentTab(1);
+    	};
+    </script>
+    <h2>Hello, {{current_user.username}}!</h2>
+    <div class="slideshow-container">
+	{% for i in range(0,len) %}
+	<div class="mySlides">
+		<img src="data:;base64,{{ STARTUPS[i].logo }}" style="width:100%;height: 400px;object-fit:scale-down;">
+		<div class="text">{{ STARTUPS[i].description }}</div>
+	</div>
+	{% endfor %}
+  	<a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+  	<a class="next" onclick="plusSlides(1)">&#10095;</a>
+    </div>
+    <br>
+    <!--
+    <div style="text-align:center">
+	{% for i in range(1, len + 1) %}
+	<span class="dot" onclick="currentSlide({{ i }})"></span> 
+	{% endfor %}	    
+    </div>
+    -->
+
+    <script type="text/javascript">
+	currentSlide(1);
+    </script>
+    <div class="row">
+	{% for i in range(0,len) %}
+		<div class="card">
+			<img src="data:;base64,{{ STARTUPS[i].logo }}" alt="{{ STARTUPS[i].name }}" style="width:100%;height:60%;object-fit:scale-down;">
+			<h1>{{ STARTUPS[i].name }}</h1>
+			<p class="price">Money Raised: ${{ STARTUPS[i].capital_raised }}</p>
+			<p style="object-fit:scale-down;">{{ STARTUPS[i].description }}</p>
+			<p><button onclick="location.href='{{ url_for('invest') }}'" type="button">Invest</button></p>
+		</div>
+	{% endfor %}
+	<a class="prev2" onclick="plusTabs(-1)">&#10094;</a>
+  	<a class="next2" onclick="plusTabs(1)">&#10095;</a>
+    </div>
+    <script type="text/javascript">
+	currentTab(1);
+    </script>
+{% endblock %}

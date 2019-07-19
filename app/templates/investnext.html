@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block app_content %}
+<div>
+  <h1>Invest in a Startup</h1>
+  <p>Click Pay to Finalize Payment</p>
+  <form action="{{ url_for('charge', amount=amount, startup=startup) }}" method="post">
+      <script
+        src="https://checkout.stripe.com/checkout.js"
+        class="stripe-button"
+        data-key="{{ key }}"
+        data-description="A Round Z Investment"
+        data-amount="{{ amount }}"
+        data-locale="auto">
+      </script>
+    </form>
+</div>
+{% endblock %}
