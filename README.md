@@ -1,6 +1,6 @@
 # round_z
 
-The website is now live at forkaia.herokuapp.com (I'm working on configuring the domain name).
+The website is now live at www.round-z.com
 
 To run the website, you can either go to the above link or:
 
